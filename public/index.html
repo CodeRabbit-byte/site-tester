@@ -24,6 +24,28 @@
       margin-top: 2rem;
       overflow-x: auto;
     }
+    .support {
+      margin-top: 3rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #333;
+    }
+    .support a {
+      display: inline-block;
+      margin: 0 1rem;
+      text-decoration: none;
+      color: #555;
+      font-weight: bold;
+      padding: 0.5rem 1rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .support a:hover {
+      background-color: #ff813f;
+      color: white;
+      border-color: #ff813f;
+    }
   </style>
 </head>
 <body>
@@ -40,6 +62,12 @@
   </form>
 
   <div id="results"></div>
+
+  <div class="support">
+    <p>If you find this tool helpful, consider supporting me:</p>
+    <a href="https://ko-fi.com/coderabbit" target="_blank" rel="noopener noreferrer">☕ Ko-fi</a>
+    
+  </div>
 
   <script>
     document.getElementById('testForm').addEventListener('submit', async (e) => {
