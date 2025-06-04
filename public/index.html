@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Real-Time UX Tester</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 2rem;
+      max-width: 600px;
+      margin: auto;
+      background: #f5f5f5;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 0.75rem;
+      margin-top: 1rem;
+      font-size: 1rem;
+    }
+    pre {
+      background: #eee;
+      padding: 1rem;
+      margin-top: 2rem;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>Real-Time UX Tester</h1>
+  <p>Test a website for accessibility and user friction under mobile/slow network conditions.</p>
+
+  <form id="testForm">
+    <input type="url" id="url" placeholder="Enter website URL (https://...)" required />
+    <select id="device">
+      <option value="mobile">Mobile (Slow 3G)</option>
+      <option value="desktop">Desktop (Fast 3G)</option>
+    </select>
+    <button type="submit">Run UX Test</button>
+  </form>
+
+  <div id="results"></div>
+
+  <script>
+    document.getElementById('testForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const url = document.getElementById('url').value;
+      const device = document.getElementById('device').value;
+
+      document.getElementById('results').innerHTML = "<p>Running test...</p>";
+
+      try {
+        const response = await fetch('/test', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url, device })
+        });
+        const data = await response.json();
+        document.getElementById('results').innerHTML = `
+          <h3>Results</h3>
+          <pre>${JSON.stringify(data, null, 2)}</pre>
+        `;
+      } catch (err) {
+        document.getElementById('results').innerHTML = `<p style="color:red;">Error: ${err.message}</p>`;
+      }
+    });
+  </script>
+</body>
+</html>
